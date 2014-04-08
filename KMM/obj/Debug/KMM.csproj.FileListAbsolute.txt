@@ -63,3 +63,6 @@ D:\KMM\KMM\bin\Autofac.xml
 D:\KMM\KMM\bin\Autofac.Integration.Mvc.xml
 D:\KMM\KMM\bin\KMM.Model.pdb
 D:\KMM\KMM\bin\PagedList.xml
+D:\KMM\KMM\obj\Debug\KMM.Migrations.InitialCreate.resources
+D:\KMM\KMM\obj\Debug\KMM.csproj.GenerateResource.Cache
+D:\KMM\KMM\obj\Debug\KMM.Migrations.New.resources

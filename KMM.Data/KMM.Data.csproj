@@ -61,9 +61,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="KMMEntities.cs" />
-    <Compile Include="Migrations\201404070804076_startup.cs" />
-    <Compile Include="Migrations\201404070804076_startup.Designer.cs">
-      <DependentUpon>201404070804076_startup.cs</DependentUpon>
+    <Compile Include="Migrations\201404080738228_New.cs" />
+    <Compile Include="Migrations\201404080738228_New.Designer.cs">
+      <DependentUpon>201404080738228_New.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,8 +81,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201404070804076_startup.resx">
-      <DependentUpon>201404070804076_startup.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404080738228_New.resx">
+      <DependentUpon>201404080738228_New.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -27,6 +27,25 @@ namespace KMM.Controllers
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult GetAccount()
+        {
+            var dbContext = new ApplicationDbContext();
+            var users = dbContext.Users.ToList().Select(a => new AccountGridViewModel
+                                                                     {
+                                                                         UserName = a.UserName,
+                                                                         FirstName = a.FirstName,
+                                                                         LastName = a.LastName,
+                                                                         Department = a.Department,
+                                                                         Roles = "troy"
+                                                                     });
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -63,25 +82,31 @@ namespace KMM.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
-            return View();
+            var model = new RegisterViewModel();
+            ViewBag.Roles = new ApplicationDbContext().Roles.ToList();
+            return View(model);
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
+                var user = model.GetUser();
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    foreach (var role in model.Roles.Split(','))
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, role);
+                    }
                     await SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -91,7 +116,7 @@ namespace KMM.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            ViewBag.Roles = new ApplicationDbContext().Roles.ToList();
             return View(model);
         }
 

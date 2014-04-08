@@ -14,5 +14,5 @@ D:\KMM\KMM.Data\bin\Debug\PagedList.xml
 D:\KMM\KMM.Data\bin\Debug\PagedList.Mvc.xml
 D:\KMM\KMM.Data\obj\Debug\KMM.Data.dll
 D:\KMM\KMM.Data\obj\Debug\KMM.Data.pdb
-D:\KMM\KMM.Data\obj\Debug\KMM.Data.Migrations.startup.resources
+D:\KMM\KMM.Data\obj\Debug\KMM.Data.Migrations.New.resources
 D:\KMM\KMM.Data\obj\Debug\KMM.Data.csproj.GenerateResource.Cache
