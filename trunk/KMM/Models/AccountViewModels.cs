@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace KMM.Models
 {
@@ -46,18 +48,55 @@ namespace KMM.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Tên đăng nhập")]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Xác nhận mật khẩu")]
+        [Compare("Password", ErrorMessage = "Xác nhận không khớp với mật khẩu.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Họ")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Tên")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Phòng ban")]
+        public Department Department { get; set; }
+
+        [Display(Name = "Quyền hạn")]
+        public string Roles { get; set; }
+
+        public ApplicationUser GetUser()
+        {
+            var user = new ApplicationUser
+            {
+                UserName = UserName,
+                FirstName = FirstName,
+                LastName = LastName,
+                Department = Department
+            };
+            return user;
+        }
+    }
+
+    public class AccountGridViewModel
+    {
+        public string UserName { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public Department Department { get; set; }
+
+        public string Roles { get; set; }
     }
 }

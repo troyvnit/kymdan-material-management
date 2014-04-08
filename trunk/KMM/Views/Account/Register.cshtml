@@ -1,6 +1,8 @@
-﻿@model KMM.Models.RegisterViewModel
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model KMM.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    var roles = (List<IdentityRole>)ViewBag.Roles;
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -27,6 +29,25 @@
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Roles, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.HiddenFor(m => m.Roles)
+            @Html.DropDownList("RoleSelector", new SelectList(roles, "Name", "Name"), new { @class = "form-control", @id = "RoleSelector", multiple = "multiple" })
         </div>
     </div>
     <div class="form-group">

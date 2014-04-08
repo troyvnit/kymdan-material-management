@@ -3,7 +3,7 @@ namespace KMM.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class startup : DbMigration
+    public partial class New : DbMigration
     {
         public override void Up()
         {
