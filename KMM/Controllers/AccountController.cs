@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using KMM.Models;
+using Newtonsoft.Json;
 
 namespace KMM.Controllers
 {
@@ -35,20 +37,54 @@ namespace KMM.Controllers
         public ActionResult GetAccount()
         {
             var dbContext = new ApplicationDbContext();
-            var users = dbContext.Users.ToList().Select(a => new AccountGridViewModel
-                                                                     {
-                                                                         UserName = a.UserName,
-                                                                         FirstName = a.FirstName,
-                                                                         LastName = a.LastName,
-                                                                         Department = a.Department,
-                                                                         Roles = "troy"
-                                                                     });
-            return Json(users, JsonRequestBehavior.AllowGet);
+            var users = dbContext.Users.ToList();
+            return Json(new
+            {
+                data = users.Select(a => new AccountGridViewModel
+                {
+                    Id = a.Id,
+                    UserName = a.UserName,
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    Department = a.Department,
+                    Roles = String.Join(", ", a.Roles.Select(r => r.Role.Name).ToArray())
+                }),
+                total = users.Count
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddOrUpdateAccount(string models)
+        {
+            var accounts = JsonConvert.DeserializeObject<List<AccountGridViewModel>>(models);
+            foreach (var account in accounts)
+            {
+                var user = await UserManager.FindByIdAsync(account.Id);
+                if (user != null)
+                {
+                    var result = await UserManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        foreach (var role in account.Roles.Split(','))
+                        {
+                            await UserManager.AddToRoleAsync(user.Id, role);
+                        }
+                    }
+                }
+            }
+            return Json(accounts, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetRole()
+        {
+            var dbContext = new ApplicationDbContext();
+            var roles = dbContext.Roles.Select(r => r.Name).ToList();
+            return Json(roles, JsonRequestBehavior.AllowGet);
         }
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -58,7 +94,7 @@ namespace KMM.Controllers
         //
         // POST: /Account/Login
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -82,7 +118,8 @@ namespace KMM.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             var model = new RegisterViewModel();
@@ -93,7 +130,8 @@ namespace KMM.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
