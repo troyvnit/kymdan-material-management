@@ -1,76 +1,56 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
+<div class="row">&nbsp;</div>
 <div class="row">
     <div class="panel panel-default">
+        <div class="panel-heading">Danh sách công việc</div>
         <div class="panel-body">
-            <input type="text" id="fromDateDatePicker" value="@String.Format("{0:dd/MM/yyyy}", DateTime.Now)" />
-            <input type="text" id="toDateDatePicker" value="@String.Format("{0:dd/MM/yyyy}", DateTime.Now)" />
-            <input type="text" class="form-control" id="keyWord" placeholder="Từ khóa" />
-            <button type="button" class="btn btn-default" id="showAllMaterialProposals">Xem tất cả</button>
+            <div class="pull-right">
+                <a href="#" class="btn btn-danger" role="button">Xóa mục đã chọn</a>
+                <a href="#" class="btn btn-success" role="button">Duyệt mục đã chọn</a>
+                <a href="#" class="btn btn-primary" role="button">Thêm đề xuất</a>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">&nbsp;</div>
+            <div id="MaterialProposalGrid"></div>
         </div>
     </div>
 </div>
 <div class="row">
-    <div id="MaterialProposalGrid"></div>
+    
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
+    <script type="text/x-kendo-template" id="materialProposalToolbarTemplate">
+    <div class="toolbar">
+        <div class="col-lg-8">
+            <label>Xem theo:</label>
+            <input id="Department" />
+            <input id="ProgressStatus" />
+            <div class="btn-group" data-toggle="buttons" id="Finished">
+                <label class="btn btn-success">
+                    <input type="radio" name="finished" value="C300"> Đã duyệt
+                </label>
+                <label class="btn btn-warning">
+                    <input type="radio" name="finished" value="C530"> Chờ duyệt
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="finished" value="C700"> Tất cả
+                </label>
+            </div>
+        </div>
+        <div class="input-group col-lg-3">
+                <input type="text" class="form-control" id="keyWord" placeholder="Từ khóa" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Tìm</button>
+                </span>
+        </div>
+    </div>
+</script>
     <script type="text/javascript">
         $(document).ready(function() {
-
-            function startChange() {
-                var startDate = from.value(),
-                    endDate = to.value();
-
-                if (startDate) {
-                    startDate = new Date(startDate);
-                    startDate.setDate(startDate.getDate());
-                    to.min(startDate);
-                } else if (endDate) {
-                    from.max(new Date(endDate));
-                } else {
-                    endDate = new Date();
-                    from.max(endDate);
-                    to.min(endDate);
-                }
-                $("#MaterialProposalGrid").data("kendoGrid").dataSource.read();
-            }
-
-            function endChange() {
-                var toDate = to.value(),
-                    fromDate = from.value();
-
-                if (toDate) {
-                    toDate = new Date(toDate);
-                    toDate.setDate(toDate.getDate());
-                    from.max(toDate);
-                } else if (fromDate) {
-                    to.min(new Date(fromDate));
-                } else {
-                    toDate = new Date();
-                    from.max(toDate);
-                    to.min(toDate);
-                }
-                $("#MaterialProposalGrid").data("kendoGrid").dataSource.read();
-            }
-
-            var from = $("#fromDateDatePicker").kendoDatePicker({
-                format: "dd/MM/yyyy",
-                change: startChange
-            }).data("kendoDatePicker");
-
-            var to = $("#toDateDatePicker").kendoDatePicker({
-                format: "dd/MM/yyyy",
-                change: endChange
-            }).data("kendoDatePicker");
-
-            from.max(to.value());
-            to.min(from.value());
-
             var materialProposalDataSource = new kendo.data.DataSource({
                 transport: {
                     read: {
@@ -96,8 +76,6 @@
                             };
                         } else {
                             return {
-                                fromDate: kendo.toString(from.value(), "yyyy/MM/dd"),
-                                toDate: kendo.toString(to.value(), "yyyy/MM/dd"),
                                 keyWord: $("#keyWord").val(),
                                 skip: options.skip,
                                 take: options.take
@@ -140,7 +118,7 @@
                     }
                 },
                 height: 500,
-                toolbar: [{ name: "create", text: "Thêm" }, { name: "save", text: "Lưu" }, { name: "cancel", text: "Hủy" }],
+                toolbar: kendo.template($("#materialProposalToolbarTemplate").html()),
                 columns: [
                     { field: "ImplementerUserName", title: "Người thực hiện" },
                     { field: "Description", title: "Mô tả" },
@@ -161,6 +139,34 @@
                     { command: [{ name: "destroy", title: "&nbsp;", width: 70, text: "Xóa" }] }
                 ],
                 editable: true
+            });
+
+            $("#Department").kendoDropDownList({
+                dataTextField: "CategoryName",
+                dataValueField: "CategoryID",
+                autoBind: false,
+                optionLabel: "All",
+                dataSource: {
+                    type: "odata",
+                    severFiltering: true,
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                    }
+                }
+            });
+            
+            $("#ProgressStatus").kendoDropDownList({
+                dataTextField: "CategoryName",
+                dataValueField: "CategoryID",
+                autoBind: false,
+                optionLabel: "All",
+                dataSource: {
+                    type: "odata",
+                    severFiltering: true,
+                    transport: {
+                        read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                    }
+                }
             });
         });
     </script>
