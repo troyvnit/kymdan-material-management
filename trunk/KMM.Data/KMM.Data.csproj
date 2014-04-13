@@ -65,10 +65,18 @@
     <Compile Include="Migrations\201404080738228_New.Designer.cs">
       <DependentUpon>201404080738228_New.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404130355266_update.cs" />
+    <Compile Include="Migrations\201404130355266_update.Designer.cs">
+      <DependentUpon>201404130355266_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404130443336_update1.cs" />
+    <Compile Include="Migrations\201404130443336_update1.Designer.cs">
+      <DependentUpon>201404130443336_update1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\MaterialRequestRepository.cs" />
-    <Compile Include="Service\MaterialRequestService.cs" />
+    <Compile Include="Repository\MaterialProposalRepository.cs" />
+    <Compile Include="Service\MaterialProposalService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -83,6 +91,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201404080738228_New.resx">
       <DependentUpon>201404080738228_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404130355266_update.resx">
+      <DependentUpon>201404130355266_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404130443336_update1.resx">
+      <DependentUpon>201404130443336_update1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

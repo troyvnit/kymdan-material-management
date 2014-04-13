@@ -1,0 +1,8 @@
+D:\KMM\KMM.Model\bin\Debug\KMM.Model.dll
+D:\KMM\KMM.Model\bin\Debug\KMM.Model.pdb
+D:\KMM\KMM.Model\obj\Debug\KMM.Model.dll
+D:\KMM\KMM.Model\obj\Debug\KMM.Model.pdb
+F:\Working\Projects\KMM\KMM.Model\bin\Debug\KMM.Model.dll
+F:\Working\Projects\KMM\KMM.Model\bin\Debug\KMM.Model.pdb
+F:\Working\Projects\KMM\KMM.Model\obj\Debug\KMM.Model.dll
+F:\Working\Projects\KMM\KMM.Model\obj\Debug\KMM.Model.pdb

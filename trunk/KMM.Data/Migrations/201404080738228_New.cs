@@ -8,7 +8,7 @@ namespace KMM.Data.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.MaterialRequests",
+                "dbo.MaterialProposals",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -19,7 +19,7 @@ namespace KMM.Data.Migrations
         
         public override void Down()
         {
-            DropTable("dbo.MaterialRequests");
+            DropTable("dbo.MaterialProposals");
         }
     }
 }

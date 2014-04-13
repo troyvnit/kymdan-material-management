@@ -25,9 +25,9 @@ namespace KMM
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
             builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().InstancePerHttpRequest();
-            builder.RegisterAssemblyTypes(typeof(IMaterialRequestRepository).Assembly)
+            builder.RegisterAssemblyTypes(typeof(IMaterialProposalRepository).Assembly)
                 .Where(a => a.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerHttpRequest();
-            builder.RegisterAssemblyTypes(typeof(IMaterialRequestService).Assembly)
+            builder.RegisterAssemblyTypes(typeof(IMaterialProposalService).Assembly)
                 .Where(a => a.Name.EndsWith("Service")).AsImplementedInterfaces().InstancePerHttpRequest();
 
             builder.RegisterFilterProvider();
