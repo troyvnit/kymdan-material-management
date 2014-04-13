@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using KMM.Model.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace KMM.Models

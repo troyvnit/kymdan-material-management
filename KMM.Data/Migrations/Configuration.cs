@@ -9,7 +9,7 @@ namespace KMM.Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(KMM.Data.KMMEntities context)

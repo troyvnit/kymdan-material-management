@@ -1,4 +1,5 @@
 ﻿using System;
+using KMM.Model.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -14,11 +15,6 @@ namespace KMM.Models
             get { return String.Concat(FirstName, " ", LastName); }
         }
         public Department Department { get; set; }
-    }
-
-    public enum Department
-    {
-        Material, Bussiness
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

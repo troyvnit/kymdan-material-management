@@ -12,7 +12,7 @@ namespace KMM.Data
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<KMMEntities, Configuration>());
         }
 
-        DbSet<MaterialRequest> MaterialRequests { get; set; }
+        DbSet<MaterialProposal> MaterialProposals { get; set; }
 
         public virtual void Commit()
         {
